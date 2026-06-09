@@ -10,4 +10,4 @@ The describtion on how it works is on the Website itself.
 
 -> Please let me know, if it works for you and if you understood how it works <3
 
-- l1tSky
+l1tSky
