@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Gothic 1 Remake - LockSolver</title>
-  
- <style>
-  body {
-    margin: 0;
-	color: #ccc;
-    text-align: left;
-	padding-top: 270px;
-	padding-left: 315px;
-	min-height: 100vh;
-    background-color: black;          /* fills extra space */
-    background-image: url("bg.jpg");
-    background-repeat: no-repeat;
-    background-position: top left;
-    background-size: 100%;
-  }
+<meta charset="UTF-8">
+<title>Gothic 1 Remake - LockSolver</title>
 
-  .container {
-    display: inline-block;   /* key trick */
-    text-align: left;        /* keeps form readable */
-  }
+<style>
+body {
+margin: 0;
+color: #ccc;
+text-align: left;
+padding-top: 270px;
+padding-left: 315px;
+min-height: 100vh;
+background-image: url("bg.jpg");
+background-size: cover;
+background-position: top left;
+background-repeat: no-repeat;
+}
 
-  .row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-   textarea {
-	overflow: hidden;
-	resize: none;
-	line-height: 1.2;
-	box-sizing: border-box;
-  }
+.container {
+display: inline-block;   /* key trick */
+text-align: left;        /* keeps form readable */
+}
+
+.row {
+display: flex;
+justify-content: center;
+gap: 10px;
+}
+
+textarea {
+overflow: hidden;
+resize: none;
+line-height: 1.2;
+box-sizing: border-box;
+}
   
   #myDIV {
   display: none;
-  overflow: hidden;
   }
 </style>
 </head>
@@ -49,39 +47,40 @@
 <h2 style="margin: 0; margin-top: 100px;">Schlossöffner</h2>
 
 <div>
-  <p style="margin: 0; margin-top: 20px;">Anzahl Zylinder:</p>
-  <input id="numZylinder" type="number" value="5" min="1" max="20" style="margin-top: 5px; background-color: #2b2a33; color: #ccc">
+<p style="margin: 0; margin-top: 20px;">Anzahl Zylinder:</p>
+<input id="numZylinder" type="number" value="5" min="1" max="20" style="margin-top: 5px; background-color: #2b2a33; color: #ccc">
 </div>
 
 <div>
-  <p style="margin: 0; margin-top: 20px;">Startposition der Zylinder:</p>
-  <input id="start" value="4 5 1 6 3 " size="30" style="margin-top: 5px; background-color: #2b2a33; color: #ccc">
-  <p style="margin-bottom: 0;">Position 1 = Ganz rechts</p>
-  <p style="margin: 0;">Position 7 = Ganz links</p>
-  <p style="margin: 0;">(z.B. 4 5 1 6 3)</p>
+<p style="margin: 0; margin-top: 20px;">Startposition der Zylinder:</p>
+<input id="start" value="4 5 1 6 3 " size="30" style="margin-top: 5px; background-color: #2b2a33; color: #ccc">
+<p style="margin-bottom: 0;">Position 1 = Ganz rechts</p>
+<p style="margin: 0;">Position 7 = Ganz links</p>
+<p style="margin: 0;">(z.B. 4 5 1 6 3)</p>
 </div>
 
 <div>
-  <h3 style="margin: 0;"><br>Regel für jeden Zylinder</h3>
-  <p style="margin: 0;">z. B. 5 Reihen (= 5 Zylinder)</p>
-  <p style="margin: 0;">Zylinder 1 ist ganz vorne</p>
-  <p style="margin: 0;">-1 = Verschiebung um 1 Loch nach links (A)</p>
-  <p style="margin: 0;"> 0 = Keine Verschiebung</p>
-  <p style="margin-top: 0; margin-bottom: 5;">1 = Verschiebung um 1 Loch nach rechts (D)</p>
+<h3 style="margin: 0;"><br>Regel für jeden Zylinder</h3>
+<p style="margin: 0;">z. B. 5 Reihen (= 5 Zylinder)</p>
+<p style="margin: 0;">Zylinder 1 ist ganz vorne</p>
+<p style="margin: 0;">-1 = Verschiebung um 1 Loch nach links (A)</p>
+<p style="margin: 0;"> 0 = Keine Verschiebung</p>
+<p style="margin-top: 0; margin-bottom: 5;">1 = Verschiebung um 1 Loch nach rechts (D)</p>
 <div style="display: flex; gap: 10px; align-items: flex-start;">
 
 <div style="display: flex; gap: 10px; align-items: flex-start;">
 
-  <!-- linke Spalte -->
-  <pre id="zylinderLabels" style="margin: 0; padding: 6px; border: 1px solid #ccc;"></pre>
+<!-- linke Spalte -->
+<pre id="zylinderLabels" style="margin: 0; padding: 6px; border: 1px solid #ccc;"></pre>
 
-  <!-- rechte Spalte -->
-  <textarea id="rules" rows="6" cols="30" style="padding: 6px; background-color: #2b2a33; color: #ccc"></textarea>
+<!-- rechte Spalte -->
+<textarea id="rules" rows="6" cols="30" style="padding: 6px; background-color: #2b2a33; color: #ccc"></textarea>
 
 </div>
 </div>
 </div>
 
+<br><button onclick="run()">Solve</button>
 <br><button onclick="run()">Lösung</button>
 
 <button onclick="ToggleExplanation()">Weitere Erklärung</button>
@@ -99,120 +98,120 @@ const MAX_POS = 7;
 
 // --- parse helpers ---
 function parseNumbers(str) {
-  return str.trim().split(/\s+/).map(Number);
+return str.trim().split(/\s+/).map(Number);
 }
 
 // --- apply move ---
 function applyMove(state, move) {
-  const newState = state.map((v, i) => v + move[i]);
+const newState = state.map((v, i) => v + move[i]);
 
-  if (newState.some(x => x < MIN_POS || x > MAX_POS)) {
-    return null;
-  }
+if (newState.some(x => x < MIN_POS || x > MAX_POS)) {
+return null;
+}
 
-  return newState;
+return newState;
 }
 
 // --- BFS solver ---
 function solve(start, target, rules) {
-  const moves = [];
+const moves = [];
 
-  // left moves
-  for (let i = 0; i < rules.length; i++) {
-    moves.push([`Z${i+1} Links`, rules[i]]);
-  }
+// left moves
+for (let i = 0; i < rules.length; i++) {
+moves.push([`Z${i+1} Links`, rules[i]]);
+}
 
-  // right moves (inverse)
-  for (let i = 0; i < rules.length; i++) {
-    const inv = rules[i].map(x => -x);
-    moves.push([`Z${i+1} Rechts`, inv]);
-  }
+// right moves (inverse)
+for (let i = 0; i < rules.length; i++) {
+const inv = rules[i].map(x => -x);
+moves.push([`Z${i+1} Rechts`, inv]);
+}
 
-  const queue = [start];
-  const visited = new Map();
-  visited.set(start.toString(), [null, null]);
+const queue = [start];
+const visited = new Map();
+visited.set(start.toString(), [null, null]);
 
-  while (queue.length > 0) {
-    const state = queue.shift();
+while (queue.length > 0) {
+const state = queue.shift();
 
-    if (arraysEqual(state, target)) {
-      let path = [];
-      let cur = state;
+if (arraysEqual(state, target)) {
+let path = [];
+let cur = state;
 
-      while (visited.get(cur.toString())[0] !== null) {
-        const [prev, move] = visited.get(cur.toString());
-        path.push(move);
-        cur = prev;
-      }
+while (visited.get(cur.toString())[0] !== null) {
+const [prev, move] = visited.get(cur.toString());
+path.push(move);
+cur = prev;
+}
 
-      return path.reverse();
-    }
+return path.reverse();
+}
 
-    for (const [name, move] of moves) {
-      const next = applyMove(state, move);
-      if (!next) continue;
+for (const [name, move] of moves) {
+const next = applyMove(state, move);
+if (!next) continue;
 
-      const key = next.toString();
+const key = next.toString();
 
-      if (!visited.has(key)) {
-        visited.set(key, [state, name]);
-        queue.push(next);
-      }
-    }
-  }
+if (!visited.has(key)) {
+visited.set(key, [state, name]);
+queue.push(next);
+}
+}
+}
 
-  return null;
+return null;
 }
 
 // helper compare arrays
 function arraysEqual(a, b) {
-  return a.length === b.length && a.every((v, i) => v === b[i]);
+return a.length === b.length && a.every((v, i) => v === b[i]);
 }
 
 // Dynamische Anpassung in "Echtzeit"
 document.getElementById("numZylinder").addEventListener("input", (e) => {
-  generateUI(parseInt(e.target.value));
+generateUI(parseInt(e.target.value));
 });
 
 // Dynamisches Input Feld für Zylinder
 function generateUI(num) {
-  // linke Spalte
-  let labels = "";
-  for (let i = 1; i <= num; i++) {
-    labels += `Zylinder ${i}:\n`;
-  }
-  document.getElementById("zylinderLabels").innerText = labels.trim();
+// linke Spalte
+let labels = "";
+for (let i = 1; i <= num; i++) {
+labels += `Zylinder ${i}:\n`;
+}
+document.getElementById("zylinderLabels").innerText = labels.trim();
 
-  // rechte Spalte (Identitätsmatrix)
-  let rules = "";
-  for (let i = 0; i < num; i++) {
-    let row = Array(num).fill(0);
-    row[i] = -1;
-    rules += row.join(" ");
-	if (i < num - 1) rules += "\n";
-  }
+// rechte Spalte (Identitätsmatrix)
+let rules = "";
+for (let i = 0; i < num; i++) {
+let row = Array(num).fill(0);
+row[i] = -1;
+rules += row.join(" ");
+if (i < num - 1) rules += "\n";
+}
 
-  const rulesEl = document.getElementById("rules");
-  rulesEl.value = rules.trim();
+const rulesEl = document.getElementById("rules");
+rulesEl.value = rules.trim();
 
-  autoResize(rulesEl);
+autoResize(rulesEl);
 }
 
 function autoResize(el) {
-  const style = getComputedStyle(el);
-  const lineHeight = parseFloat(style.lineHeight);
-  const paddingTop = parseFloat(style.paddingTop);
-  const paddingBottom = parseFloat(style.paddingBottom);
+const style = getComputedStyle(el);
+const lineHeight = parseFloat(style.lineHeight);
+const paddingTop = parseFloat(style.paddingTop);
+const paddingBottom = parseFloat(style.paddingBottom);
 
-  el.style.height = "auto";
+el.style.height = "auto";
 
-  const lines = el.value.split("\n").length;
+const lines = el.value.split("\n").length;
 
-  el.style.height =
-    (lines * lineHeight) +
-    paddingTop +
-    paddingBottom +
-    "px";
+el.style.height =
+(lines * lineHeight) +
+paddingTop +
+paddingBottom +
+"px";
 }
 	
 function ToggleExplanation() {
@@ -227,51 +226,52 @@ function ToggleExplanation() {
 const startEl = document.getElementById("start");
 
 startEl.addEventListener("input", (e) => {
-  if (e.inputType !== "insertText") return;
+if (e.inputType !== "insertText") return;
 
-  if (/^\d$/.test(e.data)) {
-    startEl.value += " ";
-  }
+if (/^\d$/.test(e.data)) {
+startEl.value += " ";
+}
 });
 
 const rulesEl = document.getElementById("rules");
 
 rulesEl.addEventListener("input", () => {
-  autoResize(rulesEl);
+autoResize(rulesEl);
 });
 
 // --- UI ---
 function run() {
-  const out = document.getElementById("output");
+const out = document.getElementById("output");
 
-  const NUM_ZylinderS = parseInt(document.getElementById("numZylinder").value);
+const NUM_ZylinderS = parseInt(document.getElementById("numZylinder").value);
 
-  const start = parseNumbers(document.getElementById("start").value);
+const start = parseNumbers(document.getElementById("start").value);
 
-  const rules = document.getElementById("rules")
-    .value
-    .trim()
-    .split("\n")
-    .map(line => parseNumbers(line));
+const rules = document.getElementById("rules")
+.value
+.trim()
+.split("\n")
+.map(line => parseNumbers(line));
 
-  if (start.length !== NUM_ZylinderS) {
-    out.innerText = "Startposition passt nicht zur Anzahl Zylinder!";
-    return;
-  }
+if (start.length !== NUM_ZylinderS) {
+out.innerText = "Startposition passt nicht zur Anzahl Zylinder!";
+return;
+}
 
-  const target = Array(NUM_ZylinderS).fill(4);
+const target = Array(NUM_ZylinderS).fill(4);
 
-  const solution = solve(start, target, rules);
+const solution = solve(start, target, rules);
 
-  out.innerText = solution
-    ? "Lösung:\n\n" + solution.join("\n") + "\n\nAnzahl Züge: " + solution.length
-    : "Keine Lösung gefunden.";
+out.innerText = solution
+? "Lösung:\n\n" + solution.join("\n") + "\n\nAnzahl Züge: " + solution.length
+: "Keine Lösung gefunden.";
 }
 
 window.addEventListener("load", () => {
-  generateUI(parseInt(document.getElementById("numZylinder").value));
+generateUI(parseInt(document.getElementById("numZylinder").value));
 });
 </script>
 </div>
 </body>
+</html>
 </html>
