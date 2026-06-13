@@ -35,6 +35,10 @@
 	line-height: 1.2;
 	box-sizing: border-box;
   }
+  
+  #myDIV {
+  display: none;
+  }
 </style>
 </head>
 <body>
@@ -76,7 +80,12 @@
 </div>
 </div>
 
-<br><button onclick="run()">Solve</button>
+<br><button onclick="run()">Lösung</button>
+
+<button onclick="ToggleExplanation()">Weitere Erklärung</button>
+<div id="myDIV">
+	<br><img src="explanation.png" style="width:50%; height:50%;">
+</div>
 
 <p style="margin: 0; margin-bottom: 30px; margin-top: 20px">(Optimiert für Firefox, Chrome und Edge)</p>
 
@@ -203,6 +212,15 @@ function autoResize(el) {
     paddingBottom +
     "px";
 }
+	
+function ToggleExplanation() {
+  var x = document.getElementById("myDIV");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+} 
 
 const startEl = document.getElementById("start");
 
